@@ -1,0 +1,44 @@
+.archive .page-header {
+    position: relative;
+}
+.archive .page-title {
+    color: #fff;
+    font-size: 2em;
+    position: absolute;
+    left: 0.5em;
+    top: 1.5em;
+    z-index: 3;
+}
+.category-image {
+    margin: 0 0 2em 0;
+    position: relative;
+}
+.category-image img {
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
+}
+.category-image::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.55);
+}
+.video-frame-wrap {
+    margin: 0 0 2em 0;
+    position: relative;
+    padding-top: 56%;
+}
+.video-frame-wrap iframe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
