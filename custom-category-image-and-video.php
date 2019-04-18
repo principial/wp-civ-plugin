@@ -235,7 +235,7 @@ if ( ! class_exists( 'CUSTOM_CATEGORY_IMAGE_AND_VIDEO' ) ) {
          */
         public function add_image_video_to_description($desc, $cat_id) {
             // Get the current category ID, e.g. if we're on a category archive page
-            $category = get_category( get_query_var( 'cat' ) );
+            $category = get_category( get_query_var( 'cat', 1 ) );
             $cat_id = $category->cat_ID;
             // Get the image ID for the category
             $image_id = get_term_meta ( $cat_id, 'category-image-id', true );
@@ -243,12 +243,6 @@ if ( ! class_exists( 'CUSTOM_CATEGORY_IMAGE_AND_VIDEO' ) ) {
             $video_thumb = get_term_meta ( $cat_id, 'category-video-thumb', true );
             // Get the video link for the category
             $video_link = get_term_meta ( $cat_id, 'category-video-link', true );
-            //Prepare link depending on the service
-            if (strpos( $video_link, 'youtu' ) !== false) {
-                $video_link = 'https://www.youtube.com/embed/'.substr($video_link, strrpos($video_link, '/') + 1);
-            } elseif (strpos( $video_link, 'vimeo' ) !== false) {
-                $video_link = 'https://player.vimeo.com/video/'.substr($video_link, strrpos($video_link, '/') + 1);
-            }
             $html = '';
             // Echo the image
             if (!empty($image_id)) {
@@ -256,7 +250,7 @@ if ( ! class_exists( 'CUSTOM_CATEGORY_IMAGE_AND_VIDEO' ) ) {
             }
             // Echo the video frame
             if (!empty($video_link)) {
-                $html .= '<div class="video-frame-wrap"><iframe id="category-description" class="video-iframe" src="' . $video_link . '" width="640" height="360" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+                $html .= '<div class="video-frame-wrap" data-url="'.$video_link.'">'.wp_oembed_get($video_link, array('width' => 640, 'height' => 360)).'</div>';
             }
             //We can use thumbnail to output video with YouTube API or Vimeo player SDK
             //Now it use only for admin panel
